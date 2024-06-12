@@ -35,6 +35,14 @@ const userSchema = new mongoose.Schema({
         required: [true, "user must provide password "],
         select: false
     },
+    recipies: {
+        type: [mongoose.mongo.ObjectId],
+        ref: "recipe"
+    },
+    fev: {
+        type: [mongoose.mongo.ObjectId],
+        ref: "recipe"
+    }
 
 
 
