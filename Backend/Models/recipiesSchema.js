@@ -30,12 +30,26 @@ const recipesSchema = new mongoose.Schema({
         ref: "user"
     },
     steps: {
-        type: Object,
+        type: [Object],
         required: [true, "to create the recipe must contain some steps"]
     },
     ingredients: {
         type: [String],
         required: [true, "recipe must contain ingredients by which it is made "]
+
+    },
+    category: {
+        type: String,
+        // required: [true, "must define duration time"],
+        enum: ["<30 min", "<1 hour", "1 hour +"]
+    },
+    images: {
+        type: [String],
+        required: [true, "must have images to display"]
+    },
+    coverImage: {
+        type: String,
+        required: [true, "must have images to display for cover"]
 
     }
 

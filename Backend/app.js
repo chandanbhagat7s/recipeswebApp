@@ -6,6 +6,8 @@ const globalErrorHandler = require('./utils/globalErrorHandler');
 const userRouter = require('./Routes/userRoutes');
 const recipesRoute = require('./Routes/recipesRoutes');
 
+const cookieParser = require('cookie-parser');
+
 const app = express()
 env.config({ path: "./config.env" })
 
@@ -16,6 +18,7 @@ console.log(PORT);
 
 app.use(express.json())
 
+app.use(cookieParser())
 
 mongoose.connect(process.env.DATABASE_URL, {
 

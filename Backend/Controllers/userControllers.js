@@ -29,7 +29,7 @@ const createTokenSendRes = (id, res, statusCode, data) => {
 
     // we will set cookies 
     res.status(statusCode).json({
-        status: true,
+        status: "success",
         data
 
     })
@@ -59,8 +59,8 @@ exports.login = catchAsync(async (req, res, next) => {
 
 exports.signUp = catchAsync(async (req, res, next) => {
     console.log(req.body);
-    const { userName, email, password, mobile } = req.body;
-    const newUser = await User.create({ userName, email, password, mobile });
+    const { name, email, password, mobile } = req.body;
+    const newUser = await User.create({ name, email, password, mobile });
     if (!newUser) {
         return next(new appError("something went wrrong  ", 500));
 

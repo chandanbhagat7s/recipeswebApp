@@ -2,6 +2,74 @@ const Recipe = require("../Models/recipiesSchema");
 const appError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 
+const multer = require('multer')
+const sharp = require('sharp')
+
+
+
+// now we will decrease the quality and perform many operation 
+const multerStorage = multer.memoryStorage();
+
+
+
+// create filterObject
+const multerFilter = (req, file, cb) => {
+    if (file.mimetype.startsWith('image')) {
+
+        cb(null, true)
+    } else {
+        cb(new appError('please upload only image files', 400), false)
+
+    }
+}
+
+exports.resizeImage = catchAsync(async (req, res, next) => {
+    console.log(req.body);
+    console.log("file is ", req.files);
+    if (!req.files.coverImage || !req.files.Images) {
+        return next(new appError("please upload a file", 400))
+    }
+
+
+    // cover image
+    req.body.coverImage = `${req.body.name}-${Date.now()}-cover.jpeg`
+    await sharp(req.files.coverImage[0].buffer).toFormat('jpeg').toFile(`public/cover/${req.body.coverImage}`)
+
+    // images
+    req.body.Images = []
+    req.files.Images &&
+        await Promise.all(req.files.Images.map(async (el, i) => {
+            const fileName = `${req.body.name}-${Date.now()}-${i}.jpeg`
+            await sharp(el.buffer).toFormat('jpeg').toFile(`./public/images/${fileName}`)
+            req.body.Images.push(fileName);
+        }))
+    console.log("exit");
+
+    next()
+
+
+})
+
+
+// destination(for saving files) of multer package 
+const uploads = multer(
+    {
+        storage: multerStorage,
+        fileFilter: multerFilter
+    }
+)
+
+// middleware for uploding images
+
+
+exports.uploadImages = uploads.fields([
+    { name: 'coverImage', maxCount: 1 },
+    { name: 'Images', maxCount: 3 }
+])
+
+
+
+
 exports.createRecipes = catchAsync(async (req, res, next) => {
 
     const {
@@ -10,6 +78,8 @@ exports.createRecipes = catchAsync(async (req, res, next) => {
         description,
         steps,
         ingredients,
+        coverImage,
+        Images
     } = req.body;
     if (name, !shortDesc, !description, !steps, !ingredients) {
         return next(new appError("please enter all the fields to create recipe", 400))
@@ -23,6 +93,8 @@ exports.createRecipes = catchAsync(async (req, res, next) => {
         createdBy: req.user.id,
         steps,
         ingredients,
+        coverImage,
+        images: Images
 
     })
     if (!rec) {
