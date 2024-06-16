@@ -14,7 +14,7 @@ export default function DisplayFood() {
   const { state } = location;
   return (
     <>
-      <div className="p-5">
+      <div className="p-5  rounded-xl">
         <div className="flex flex-col space-y-3 justify-center items-center">
           <div className="heading">
             <p className="text-2xl font-bold text-gray-500">{state.name}</p>
@@ -90,6 +90,7 @@ export default function DisplayFood() {
                 </CardBody>
                 <CardFooter className="pt-0">
                   <Button>See More Posts</Button>
+                  <p className="text-red-400">*not implemented sorry</p>
                 </CardFooter>
               </Card>
             </div>

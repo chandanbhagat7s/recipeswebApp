@@ -147,15 +147,34 @@ export default function CreateRecipe() {
       if (res?.data?.status == "success") {
         //console.log(res.data.status, " Product added ");
         dispatch(info({ message: "Food items added " }));
+        setData({
+          name: "",
+          shortDesc: "",
+          description: "",
+          steps: 0,
+          ingredients: "",
+          category: "",
+          image1: "",
+          image2: "",
+          image3: "",
+          coverImage: "",
+
+          pimage1: "",
+          pimage2: "",
+          pimage3: "",
+          pcoverImage: "",
+        });
+        setSteps([]);
         window.setTimeout(() => {
           // location.assign('/me')
         }, 1500);
       }
     } catch (err) {
-      //console.log(err);
+      console.log(err);
       dispatch(
         warning({
-          message: err?.responce?.msg || "Food item not added please try again",
+          message:
+            err?.response?.data?.msg || "Food item not added please try again",
         })
       );
       // //console.log(err.response.data.msg);
@@ -177,6 +196,7 @@ export default function CreateRecipe() {
               id=""
               placeholder="Egg , chicken ..."
               onChange={handleChange}
+              value={data.name}
             />
           </div>
           <div className="py-2 flex flex-col space-y-2">
@@ -190,6 +210,7 @@ export default function CreateRecipe() {
               id=""
               placeholder="in 10 to 30 words"
               onChange={handleChange}
+              value={data.shortDesc}
             />
           </div>
 
@@ -200,6 +221,7 @@ export default function CreateRecipe() {
             <textarea
               rows={5}
               type="text"
+              value={data.description}
               name="description"
               className="p-2 rounded outline-none border-1 border-gray-300 border border-gray-700  focus:border-2 focus:border-gray-800"
               id=""
@@ -257,11 +279,13 @@ export default function CreateRecipe() {
               name="ingredients"
               className="p-2 rounded outline-none border-b-2 border-gray-700  focus:border-2 focus:border-gray-800"
               id=""
+              value={data.ingredients}
               placeholder="Salt,Pepper,oil ...etc"
               onChange={handleChange}
             />
           </div>
-          <div className="py-2 flex flex-col space-y-2">
+
+          {/* <div className="py-2 flex flex-col space-y-2">
             <label htmlFor="name" className="text-black font-bold text-xl">
               Category <sup className="text-gray-700 text-xl">*</sup>
             </label>
@@ -274,7 +298,7 @@ export default function CreateRecipe() {
               <option value="<1 hour">Option 2</option>
               <option value="1 hour +">Option 3</option>
             </select>
-          </div>
+          </div> */}
 
           <div className="py-2 flex flex-col space-y-2">
             <label htmlFor="name" className="text-black font-bold text-xl">

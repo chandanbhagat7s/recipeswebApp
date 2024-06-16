@@ -81,9 +81,12 @@ exports.createRecipes = catchAsync(async (req, res, next) => {
         coverImage,
         Images
     } = req.body;
+    // console.log("body is", req.body);
     if (name, !shortDesc, !description, !steps, !ingredients) {
         return next(new appError("please enter all the fields to create recipe", 400))
     }
+
+
 
 
     const rec = await Recipe.create({
@@ -91,7 +94,7 @@ exports.createRecipes = catchAsync(async (req, res, next) => {
         shortDesc,
         description,
         createdBy: req.user.id,
-        steps,
+        steps: steps.split(","),
         ingredients,
         coverImage,
         images: Images
@@ -149,6 +152,61 @@ exports.getRecipeById = catchAsync(async (req, res, next) => {
 })
 
 
+exports.getRecipeByIdAndUpdate = catchAsync(async (req, res, next) => {
+
+
+    const recipeId = req.params.id;
+    const {
+        shortDesc,
+        description,
+        steps,
+        ingredients,
+    } = req.body;
+
+    const rec = await Recipe.findByIdAndUpdate(recipeId, {
+        shortDesc,
+        description,
+        steps,
+        ingredients,
+    }, {
+        new: true
+    })
+
+
+    if (!rec) {
+        return next(new appError(`no recipe found with ${recipeId} or updation failed`, 400))
+    }
+
+    res.status(200).send({
+        status: "success",
+        message: "recipe updated successfully ",
+    })
+})
+
+
+exports.getRecipeByIdAndDelete = catchAsync(async (req, res, next) => {
+
+
+    const recipeId = req.params.id;
+
+    const resepe = await Recipe.findById(recipeId)
+    console.log(resepe.createdBy, req.user._id);
+    if (`${resepe.createdBy}` != `${req.user._id}`) {
+        return next(new appError(`access denide `, 401))
+    }
+
+    await Recipe.findOneAndDelete(recipeId)
+
+
+
+
+    res.status(200).send({
+        status: "success",
+        message: "recipe deleted successfully ",
+    })
+})
+
+
 
 
 exports.getAllRecipe = catchAsync(async (req, res, next) => {
@@ -173,3 +231,27 @@ exports.getAllRecipe = catchAsync(async (req, res, next) => {
     })
 })
 
+exports.getAllMyRecipe = catchAsync(async (req, res, next) => {
+
+    const id = req.params.id;
+    if (!id) {
+        return next(new appError("please enter id", 400))
+    }
+    const rec = await Recipe.find({ createdBy: id }).populate("createdBy")
+
+    //console.log(rec);
+    if (rec?.recipies?.length == 0) {
+        return res.status(200).send({
+            status: "success",
+            message: "no recipe found ",
+            rec: rec
+
+        })
+    }
+
+    res.status(200).send({
+        status: "success",
+        message: "recipe fetched successfully ",
+        rec: rec
+    })
+})
