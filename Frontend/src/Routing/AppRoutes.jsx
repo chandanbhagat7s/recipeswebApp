@@ -5,6 +5,7 @@ import Home from "../Layout/Home";
 import CreateRecipe from "../Component/CreateRecipe";
 import Foodcards from "../Component/Foodcards";
 import AllListRecipe from "../Component/AllListRecipe";
+import DisplayFood from "../Component/DisplayFood";
 
 export default function AppRoutes() {
   return (
@@ -24,6 +25,14 @@ export default function AppRoutes() {
           element={
             <Home>
               <CreateRecipe />
+            </Home>
+          }
+        />
+        <Route
+          path="/makeit"
+          element={
+            <Home>
+              <DisplayFood />
             </Home>
           }
         />

@@ -1,4 +1,8 @@
 import { Link } from "react-router-dom";
+import { CiHome } from "react-icons/ci";
+import { MdOutlineCreateNewFolder } from "react-icons/md";
+import { CgProfile } from "react-icons/cg";
+
 import { CiMenuBurger } from "react-icons/ci";
 import { useState } from "react";
 
@@ -10,7 +14,7 @@ export default function Navbar() {
   }
   return (
     <>
-      <div className=" fixed z-[100] w-[100vw] flex border-b-2 border-black ">
+      <div className=" fixed z-[100] w-[100vw] flex  ">
         <div className="">
           <button
             onClick={handleOpenMenu}
@@ -35,22 +39,25 @@ export default function Navbar() {
               />
             </div>
 
-            <nav className="flex space-x-2 w-2/2 md:w-1/3 justify-end text-sm md:text-md">
+            <nav className="flex space-x-2 w-2/2 md:w-1/3 justify-end text-sm md:text-md ">
               <Link
-                className="p-2 rounded text-black hover:bg-gray-500 hover:text-white font-bold border border-black cursor-pointer "
+                className="font-bold uppercase cursor-pointer p-2 text-gray-500 flex justify-cente items-center space-x-2 hover:scale-105 hover:text-black border-1 border-gray-300 border rounded-full "
                 to={"/home"}
               >
-                Home
+                <p>Home</p>
+                <CiHome className="text-2xl" />
               </Link>
 
               <Link
-                className="p-2 rounded text-black hover:bg-black hover:text-white font-bold border border-black cursor-pointer"
+                className="font-bold uppercase cursor-pointer p-2 text-gray-500  flex justify-cente items-center space-x-2 hover:scale-105 hover:text-black border-1 border-gray-300 border rounded-full "
                 to={"/createRecipe"}
               >
-                Create Recipe
+                <p>Create Recipe</p>
+                <MdOutlineCreateNewFolder className="text-2xl" />
               </Link>
-              <div className="p-2 rounded text-black hover:bg-blue-900 hover:text-white font-bold border border-black cursor-pointer">
-                Profile
+              <div className="font-bold uppercase cursor-pointer p-2 text-gray-500 flex justify-cente items-center space-x-2 hover:scale-105 hover:text-black border-1 border-gray-300 border rounded-full  ">
+                <p> Profile</p>
+                <CgProfile className="text-2xl" />
               </div>
             </nav>
           </div>

@@ -9,7 +9,7 @@ const createTokenSendRes = (id, res, statusCode, data) => {
     let token = jwt.sign({ id }, process.env.JWT_SECRET_KEY, {
         expiresIn: process.env.JWT_EXPIRIR_IN
     });
-    console.log("token is ", token);
+    //console.log("token is ", token);
     let cookieOptions = {
         expires: new Date(
             Date.now() + 90 * 24 * 60 * 60 * 1000
@@ -37,7 +37,7 @@ const createTokenSendRes = (id, res, statusCode, data) => {
 
 
 exports.login = catchAsync(async (req, res, next) => {
-    console.log(req);
+    //console.log(req);
     const { email, password } = req.body;
 
 
@@ -58,14 +58,14 @@ exports.login = catchAsync(async (req, res, next) => {
 })
 
 exports.signUp = catchAsync(async (req, res, next) => {
-    console.log(req.body);
+    //console.log(req.body);
     const { name, email, password, mobile } = req.body;
     const newUser = await User.create({ name, email, password, mobile });
     if (!newUser) {
         return next(new appError("something went wrrong  ", 500));
 
     }
-    console.log(newUser);
+    //console.log(newUser);
     newUser.password = undefined;
     createTokenSendRes(newUser._id, res, 201, newUser)
 });

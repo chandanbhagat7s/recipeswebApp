@@ -66,7 +66,7 @@ userSchema.pre('save', async function (next) {
 
 userSchema.methods.correctPass = async function (inputpassword, password) {
     let t = await bcrypt.compare(inputpassword, password)
-    console.log(t);
+    //console.log(t);
     return t
 }
 
@@ -84,9 +84,9 @@ userSchema.methods.IsPasswordChanged = function (time) {
 userSchema.methods.changedPasswords = async function (jwttokentime) {
     if (this.changedPasswodTime) {
         const change = parseInt(this.changedPasswodTime.getTime() / 1000, 10)
-        // console.log(jwttokentime, this.changedPasswodTime.getTime() / 1000);
-        // console.log(jwttokentime, change);
-        // console.log(jwttokentime < change);
+        // //console.log(jwttokentime, this.changedPasswodTime.getTime() / 1000);
+        // //console.log(jwttokentime, change);
+        // //console.log(jwttokentime < change);
         return jwttokentime < change
     }
 

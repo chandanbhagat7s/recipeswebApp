@@ -28,7 +28,7 @@ const LoginForm = ({ setTab }) => {
       return dispatch(warning({ message: "please enter all the details" }));
     }
     const res = await dispatch(loginForm(data));
-    console.log(res);
+    //console.log(res);
     if (res?.payload?.data?.status == "success") {
       dispatch(success({ message: "Logged in successfully " }));
       nevigate("/home");

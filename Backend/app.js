@@ -14,7 +14,7 @@ env.config({ path: "./config.env" })
 
 
 const PORT = process.env.PORT || 3000;
-console.log(PORT);
+//console.log(PORT);
 
 app.use(express.json())
 

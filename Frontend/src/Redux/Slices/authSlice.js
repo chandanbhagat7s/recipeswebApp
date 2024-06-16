@@ -8,7 +8,7 @@ export const signupForm = createAsyncThunk('/signup/user', async (data) => {
 
     try {
         let { name, email, password, mobile, address } = data;
-        console.log("data to be submitted", data);
+        //console.log("data to be submitted", data);
 
 
         const res = await axios.post('/api/v1/user/signup', {
@@ -17,7 +17,7 @@ export const signupForm = createAsyncThunk('/signup/user', async (data) => {
             withCredentials: true
         })
         if (res) {
-            console.log("res is ", res);
+            //console.log("res is ", res);
             return res
 
 
@@ -67,7 +67,7 @@ const authSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(signupForm.fulfilled, (state, action) => {
-            console.log(action);
+            //console.log(action);
             if (action.payload.data.status == "success") {
                 localStorage.setItem("isLoggedIn", JSON.stringify(true))
                 localStorage.setItem("data", JSON.stringify(action?.payload?.data?.data))

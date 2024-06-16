@@ -24,8 +24,8 @@ const multerFilter = (req, file, cb) => {
 }
 
 exports.resizeImage = catchAsync(async (req, res, next) => {
-    console.log(req.body);
-    console.log("file is ", req.files);
+    //console.log(req.body);
+    //console.log("file is ", req.files);
     if (!req.files.coverImage || !req.files.Images) {
         return next(new appError("please upload a file", 400))
     }
@@ -43,7 +43,7 @@ exports.resizeImage = catchAsync(async (req, res, next) => {
             await sharp(el.buffer).toFormat('jpeg').toFile(`./public/images/${fileName}`)
             req.body.Images.push(fileName);
         }))
-    console.log("exit");
+    //console.log("exit");
 
     next()
 
@@ -154,9 +154,9 @@ exports.getRecipeById = catchAsync(async (req, res, next) => {
 exports.getAllRecipe = catchAsync(async (req, res, next) => {
 
 
-    const rec = await Recipe.find({})
+    const rec = await Recipe.find({}).populate("createdBy")
 
-    console.log(rec);
+    //console.log(rec);
     if (rec?.recipies?.length == 0) {
         return res.status(200).send({
             status: "success",

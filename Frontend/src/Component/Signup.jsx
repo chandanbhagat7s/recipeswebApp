@@ -36,7 +36,7 @@ const Signup = ({ setTab }) => {
       return dispatch(warning({ message: "please enter all the details" }));
     }
     const res = await dispatch(signupForm(data));
-    console.log("res is ", res);
+    //console.log("res is ", res);
     if (res?.payload?.data?.status == "success") {
       dispatch(success({ message: "Logged in successfully " }));
       nevigate("/home");

@@ -7,7 +7,7 @@ export default function AllListRecipe() {
   async function getFoodData() {
     try {
       const res = await axios.get("/api/v1/recipes/getAllRecipe");
-      console.log(res);
+      //console.log(res);
       res?.data?.rec?.length > 0 && setData(res.data.rec);
     } catch (error) {}
   }

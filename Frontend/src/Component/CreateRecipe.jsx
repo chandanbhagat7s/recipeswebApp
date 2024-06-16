@@ -31,7 +31,7 @@ export default function CreateRecipe() {
   function addInputSteps(e) {
     e.preventDefault();
     const dataSteps = Number(data.steps);
-    console.log(Array(data.steps).fill(""), data.steps);
+    //console.log(Array(data.steps).fill(""), data.steps);
     if (steps.length == 0) {
       setSteps(Array(dataSteps).fill(""));
     } else {
@@ -41,7 +41,7 @@ export default function CreateRecipe() {
           arr[index] = steps[index];
         }
       } else {
-        console.log("data is ", steps.length);
+        //console.log("data is ", steps.length);
         for (let index = 0; index < dataSteps; index++) {
           arr[index] = steps[index];
         }
@@ -51,7 +51,7 @@ export default function CreateRecipe() {
   }
   function handleStepChange(e) {
     const { name, value } = e.target;
-    console.log("name and value", name, value);
+    //console.log("name and value", name, value);
 
     let obj = [...steps].map((el, i) => {
       if (i == name) {
@@ -59,22 +59,22 @@ export default function CreateRecipe() {
       }
       return el;
     });
-    console.log(obj);
+    //console.log(obj);
     setSteps(obj);
   }
 
   function handleChange(e) {
-    console.log("called", e);
+    //console.log("called", e);
     let { name, value } = e.target;
-    console.log(" ", name, value);
+    //console.log(" ", name, value);
     if (e?.target?.type == "file") {
-      console.log("CAME INTO");
+      //console.log("CAME INTO");
       const fileReader = new FileReader();
       fileReader.readAsDataURL(e.target.files[0]);
       fileReader.addEventListener("load", function () {
-        console.log("CAME INTO HAND", name);
+        //console.log("CAME INTO HAND", name);
         if (name == "image1") {
-          console.log("came", this.result);
+          //console.log("came", this.result);
           return setData({
             ...data,
             [name]: e.target.files[0],
@@ -100,12 +100,12 @@ export default function CreateRecipe() {
           });
         }
       });
-      console.log(data);
+      //console.log(data);
       return;
 
       // value = e.target.files[0];
     }
-    console.log(data);
+    //console.log(data);
     setData({
       ...data,
       [name]: value,
@@ -117,7 +117,7 @@ export default function CreateRecipe() {
     const form = new FormData();
     for (const key in data) {
       // const value = product[key];
-      // console.log(`Key: ${key}, Value: ${value}`);
+      // //console.log(`Key: ${key}, Value: ${value}`);
       if (
         key == "pimage1" ||
         key == "image1" ||
@@ -132,33 +132,33 @@ export default function CreateRecipe() {
       }
       form.append(key, data[key]);
     }
-    // console.log(form);
+    // //console.log(form);
     form.append("Images", data.image1);
     form.append("Images", data.image2);
     form.append("Images", data.image3);
     form.append("steps", steps);
 
     try {
-      console.log(form.entries());
+      //console.log(form.entries());
       const res = await axios.post("/api/v1/recipes/createRecipe", form, {
         withCredentials: true,
       });
-      console.log("res is ", res);
+      //console.log("res is ", res);
       if (res?.data?.status == "success") {
-        console.log(res.data.status, " Product added ");
+        //console.log(res.data.status, " Product added ");
         dispatch(info({ message: "Food items added " }));
         window.setTimeout(() => {
           // location.assign('/me')
         }, 1500);
       }
     } catch (err) {
-      console.log(err);
+      //console.log(err);
       dispatch(
         warning({
           message: err?.responce?.msg || "Food item not added please try again",
         })
       );
-      // console.log(err.response.data.msg);
+      // //console.log(err.response.data.msg);
     }
   }
 
