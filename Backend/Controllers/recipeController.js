@@ -156,8 +156,8 @@ exports.getAllRecipe = catchAsync(async (req, res, next) => {
 
     const rec = await Recipe.find({})
 
-
-    if (rec.recipies.length == 0) {
+    console.log(rec);
+    if (rec?.recipies?.length == 0) {
         return res.status(200).send({
             status: "success",
             message: "no recipe found ",
@@ -169,7 +169,7 @@ exports.getAllRecipe = catchAsync(async (req, res, next) => {
     res.status(200).send({
         status: "success",
         message: "recipe fetched successfully ",
-        rec: res.recipies
+        rec: rec
     })
 })
 

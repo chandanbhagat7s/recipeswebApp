@@ -19,6 +19,8 @@ console.log(PORT);
 app.use(express.json())
 
 app.use(cookieParser())
+app.use(express.static('./public/'))
+
 
 mongoose.connect(process.env.DATABASE_URL, {
 

@@ -1,8 +1,9 @@
 import axios from "axios";
+import { CiFileOn } from "react-icons/ci";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { error, warning } from "../Redux/Slices/errorSlice";
+import { error, info, warning } from "../Redux/Slices/errorSlice";
 
 export default function CreateRecipe() {
   const nevigate = useNavigate();
@@ -145,42 +146,47 @@ export default function CreateRecipe() {
       console.log("res is ", res);
       if (res?.data?.status == "success") {
         console.log(res.data.status, " Product added ");
+        dispatch(info({ message: "Food items added " }));
         window.setTimeout(() => {
           // location.assign('/me')
         }, 1500);
       }
     } catch (err) {
       console.log(err);
-      dispatch(warning({ message: "error" }));
+      dispatch(
+        warning({
+          message: err?.responce?.msg || "Food item not added please try again",
+        })
+      );
       // console.log(err.response.data.msg);
     }
   }
 
   return (
     <>
-      <div className="w-2/2 lg:w-2/3 px-5 py-3 mx-auto">
-        <form action="flex flex-col">
+      <div className="w-2/2 lg:w-2/3 px-5 pt-5 lg:py-3 mx-auto rouded-xl bg-gray-100 rounded-xl  ">
+        <form action="flex flex-col ">
           <div className="py-2 flex flex-col space-y-2">
-            <label htmlFor="name" className="text-rose-500 font-bold text-xl">
-              Dish name <sup className="text-red-700 text-xl">*</sup>
+            <label htmlFor="name" className="text-black font-bold text-xl">
+              Dish name <sup className="text-gray-700 text-xl">*</sup>
             </label>
             <input
               type="text"
               name="name"
-              className="p-2 rounded outline-none border-b-2 border-rose-700  focus:border-2 focus:border-red-900"
+              className="p-2 rounded outline-none border-b-2 border-gray-700  focus:border-2 focus:border-gray-800"
               id=""
               placeholder="Egg , chicken ..."
               onChange={handleChange}
             />
           </div>
           <div className="py-2 flex flex-col space-y-2">
-            <label htmlFor="name" className="text-rose-500 font-bold text-xl">
-              Short Description <sup className="text-red-700 text-xl">*</sup>
+            <label htmlFor="name" className="text-black font-bold text-xl">
+              Short Description <sup className="text-gray-700 text-xl">*</sup>
             </label>
             <input
               type="text"
               name="shortDesc"
-              className="p-2 rounded outline-none border-b-2 border-rose-700  focus:border-2 focus:border-red-900"
+              className="p-2 rounded outline-none border-b-2 border-gray-700  focus:border-2 focus:border-gray-800"
               id=""
               placeholder="in 10 to 30 words"
               onChange={handleChange}
@@ -188,34 +194,34 @@ export default function CreateRecipe() {
           </div>
 
           <div className="py-2 flex flex-col space-y-2">
-            <label htmlFor="name" className="text-rose-500 font-bold text-xl">
-              Long Description <sup className="text-red-700 text-xl">*</sup>
+            <label htmlFor="name" className="text-black font-bold text-xl">
+              Long Description <sup className="text-gray-700 text-xl">*</sup>
             </label>
             <textarea
               rows={5}
               type="text"
               name="description"
-              className="p-2 rounded outline-none border-1 border-gray-300 border border-rose-700  focus:border-2 focus:border-red-900"
+              className="p-2 rounded outline-none border-1 border-gray-300 border border-gray-700  focus:border-2 focus:border-gray-800"
               id=""
               placeholder="in 25 to 40 words"
               onChange={handleChange}
             />
           </div>
 
-          <div className="py-2 flex flex-row space-y-2 items-center justify-around">
-            <label htmlFor="name" className="text-rose-500 font-bold text-xl">
-              Steps <sup className="text-red-700 text-xl">*</sup>
+          <div className="py-2 flex flex-col space-y-2 items-center justify-around">
+            <label htmlFor="name" className="text-black font-bold text-xl">
+              Steps <sup className="text-gray-700 text-xl">*</sup>
             </label>
             <input
               type="number"
-              className="p-2 rounded outline-none border-b-2 border-rose-700  focus:border-2 focus:border-red-900"
+              className="p-2 rounded outline-none border-b-2 border-gray-700  focus:border-2 focus:border-gray-800"
               id=""
               name="steps"
               placeholder="Enter no of steps and add it"
               onChange={handleChange}
             />
             <button
-              className="bg-rose-500 rounded-xl px-3 py-2 text-white"
+              className="bg-black hover:bg-gray-600 shadow-md hover:shadow-lg hover:scale-105 rounded-xl px-3 py-2 text-white"
               onClick={(e) => addInputSteps(e)}
             >
               Add
@@ -243,21 +249,21 @@ export default function CreateRecipe() {
           </div>
 
           <div className="py-2 flex flex-col space-y-2">
-            <label htmlFor="name" className="text-rose-500 font-bold text-xl">
-              ingredients <sup className="text-red-700 text-xl">*</sup>
+            <label htmlFor="name" className="text-black font-bold text-xl">
+              ingredients <sup className="text-gray-700 text-xl">*</sup>
             </label>
             <input
               type="text"
               name="ingredients"
-              className="p-2 rounded outline-none border-b-2 border-rose-700  focus:border-2 focus:border-red-900"
+              className="p-2 rounded outline-none border-b-2 border-gray-700  focus:border-2 focus:border-gray-800"
               id=""
               placeholder="Salt,Pepper,oil ...etc"
               onChange={handleChange}
             />
           </div>
           <div className="py-2 flex flex-col space-y-2">
-            <label htmlFor="name" className="text-rose-500 font-bold text-xl">
-              Category <sup className="text-red-700 text-xl">*</sup>
+            <label htmlFor="name" className="text-black font-bold text-xl">
+              Category <sup className="text-gray-700 text-xl">*</sup>
             </label>
             <select
               className="block w-1/3 p-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
@@ -271,9 +277,12 @@ export default function CreateRecipe() {
           </div>
 
           <div className="py-2 flex flex-col space-y-2">
-            <label htmlFor="name" className="text-rose-500 font-bold text-xl">
-              Images <sup className="text-red-700 text-xl">*</sup>
+            <label htmlFor="name" className="text-black font-bold text-xl">
+              Images <sup className="text-gray-700 text-xl">*</sup>
             </label>
+            <p className="text-black text-sm">
+              please select horizontal image for better usage
+            </p>
             <div className="flex space-x-2">
               <input
                 onChange={handleChange}
@@ -286,10 +295,11 @@ export default function CreateRecipe() {
                 id="image1"
               />
               <label
-                className="h-32 w-1/3 border border-red-500 rounded-xl flex justify-center items-center"
+                className="h-32 w-1/3 border border-gray-500 rounded-xl flex justify-center items-center"
                 htmlFor="image1"
               >
-                first
+                Select file
+                <CiFileOn />
               </label>
               <input
                 onChange={handleChange}
@@ -302,10 +312,11 @@ export default function CreateRecipe() {
                 id="image2"
               />
               <label
-                className="h-32 w-1/3 border border-red-500 rounded-xl flex justify-center items-center"
+                className="h-32 w-1/3 border border-gray-500 rounded-xl flex justify-center items-center"
                 htmlFor="image2"
               >
-                second
+                Select file
+                <CiFileOn />
               </label>
               <input
                 onChange={handleChange}
@@ -318,23 +329,24 @@ export default function CreateRecipe() {
                 id="image3"
               />
               <label
-                className="h-32 w-1/3 border border-red-500 rounded-xl flex justify-center items-center"
+                className="h-32 w-1/3 border border-gray-500 rounded-xl flex justify-center items-center"
                 htmlFor="image3"
               >
-                third
+                Select file
+                <CiFileOn />
               </label>
             </div>
           </div>
 
           <div className="py-2 flex flex-col space-y-2">
-            <label htmlFor="name" className="text-rose-500 font-bold text-xl">
-              Preview of images <sup className="text-red-700 text-xl">*</sup>
-              <p className="text-gray-500 text-sm">
-                please select horizontal image for better usage
+            <label htmlFor="name" className="text-black font-bold text-xl">
+              Preview of images <sup className="text-gray-700 text-xl">*</sup>
+              <p className="text-black text-sm font-semibold">
+                please select horizontal image for better usage from above
               </p>
             </label>
-            <div className="flex space-x-2">
-              <div className="h-32 w-1/3 border border-red-500 rounded-xl flex justify-center items-center">
+            <div className="flex space-x-2 flex-col lg:flex-row justify-center ">
+              <div className=" my-2 h-32 w-2/2 md:w-1/3 md:self-center lg:w-1/3 border border-gray-500 rounded-xl flex justify-center items-center">
                 {data.pimage1 ? (
                   <>
                     <img
@@ -346,7 +358,7 @@ export default function CreateRecipe() {
                   ""
                 )}
               </div>
-              <div className="h-32 w-1/3 border border-red-500 rounded-xl flex justify-center items-center">
+              <div className=" my-2 h-32 w-2/2 md:w-1/3 md:self-center lg:w-1/3 border border-gray-500 rounded-xl flex justify-center items-center">
                 {data.pimage2 ? (
                   <>
                     <img
@@ -358,7 +370,7 @@ export default function CreateRecipe() {
                   ""
                 )}
               </div>
-              <div className="h-32 w-1/3 border border-red-500 rounded-xl flex justify-center items-center">
+              <div className=" my-2 h-32 w-2/2 md:w-1/3 md:self-center lg:w-1/3 border border-gray-500 rounded-xl flex justify-center items-center">
                 {data.pimage3 ? (
                   <>
                     <img
@@ -374,35 +386,35 @@ export default function CreateRecipe() {
           </div>
 
           <div className="py-2 flex flex-col space-y-2">
-            <label htmlFor="name" className="text-rose-500 font-bold text-xl">
-              Cover Image <sup className="text-red-700 text-xl">*</sup>
+            <label htmlFor="name" className="text-black font-bold text-xl">
+              Cover Image <sup className="text-gray-700 text-xl">*</sup>
             </label>
             <div className="flex space-x-2">
               <input
                 onChange={handleChange}
                 type="file"
                 required
-                accept=".jpg, .jpeg, .png, .gif, .bmp, .svg"
-                pattern="^.*\.(jpg|jpeg|png|gif|bmp|svg)$"
+                accept="*"
                 name="coverImage"
                 className="hidden "
                 id="imageCover"
               />
               <label
-                className="h-32 w-1/3 border border-red-500 rounded-xl flex justify-center items-center"
+                className="h-32 w-1/3 border border-gray-500 rounded-xl flex justify-center items-center"
                 htmlFor="imageCover"
               >
-                first
+                Select file
+                <CiFileOn />
               </label>
             </div>
           </div>
 
           <div className="py-2 flex flex-col space-y-2">
-            <label htmlFor="name" className="text-rose-500 font-bold text-xl">
-              Cover Image <sup className="text-red-700 text-xl">*</sup>
+            <label htmlFor="name" className="text-black font-bold text-xl">
+              Cover Image <sup className="text-gray-700 text-xl">*</sup>
             </label>
             <div className="flex">
-              <div className="h-64 w-1/3 border border-red-500 rounded-xl flex justify-center items-center">
+              <div className="h-64 w-1/2 md:w-1/4 mx-auto lg:w-1/3 border border-gray-500 rounded-xl flex justify-center items-center">
                 {data.pcoverImage ? (
                   <>
                     <img
@@ -419,7 +431,7 @@ export default function CreateRecipe() {
 
           <div className="my-10 flex flex-col ">
             <button
-              className="px-5 py-2 rounded-full bg-rose-500 text-white w-1/3 self-center"
+              className="px-5 py-2 rounded-full bg-black text-white w-2/2 lg:w-1/3 self-center hover:bg-gray-500 shadow-md hover:shadow-md hover:scale-105"
               onClick={handleSubmitItems}
             >
               {" "}
